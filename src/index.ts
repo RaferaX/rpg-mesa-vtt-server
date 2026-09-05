@@ -26,6 +26,10 @@ io.on("connection", (socket) => {
     socket.leave(campaignId)
   })
 
+  socket.on("moverToken", ({ campaignId, tokenId, x, y }: { campaignId: string; tokenId: string; x: number; y: number }) => {
+    socket.to(campaignId).emit("tokenMovido", { tokenId, x, y })
+  })
+
   socket.on("disconnect", () => {
     console.log("Cliente desconectado:", socket.id)
   })
