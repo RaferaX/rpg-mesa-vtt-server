@@ -30,6 +30,10 @@ io.on("connection", (socket) => {
     socket.to(campaignId).emit("tokenMovido", { tokenId, x, y })
   })
 
+  socket.on("tokenCriado", ({ campaignId, token }: { campaignId: string; token: any }) => {
+    socket.to(campaignId).emit("novoToken", token)
+  })
+
   socket.on("atualizarMapa", ({ campaignId, url }: { campaignId: string; url: string }) => {
     socket.to(campaignId).emit("mapaAtualizado", { url })
   })
@@ -49,7 +53,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Cliente desconectado:", socket.id)
   })
+
+  socket.on("tokenRemovido", ({ campaignId, tokenId }: { campaignId: string; tokenId: string }) => {
+  socket.to(campaignId).emit("tokenRemovidoConfirmado", { tokenId })
+  })
+
 })
+
 
 const PORT = 4000
 httpServer.listen(PORT, () => {
