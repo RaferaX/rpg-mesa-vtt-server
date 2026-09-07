@@ -30,6 +30,22 @@ io.on("connection", (socket) => {
     socket.to(campaignId).emit("tokenMovido", { tokenId, x, y })
   })
 
+  socket.on("atualizarMapa", ({ campaignId, url }: { campaignId: string; url: string }) => {
+    socket.to(campaignId).emit("mapaAtualizado", { url })
+  })
+
+  socket.on("mensagemChat", ({ campaignId, message }: { campaignId: string; message: any }) => {
+    io.to(campaignId).emit("novaMensagem", message)
+  })
+
+  socket.on("desenharSeta", ({ campaignId, arrow }: { campaignId: string; arrow: any }) => {
+    socket.to(campaignId).emit("setaDesenhada", arrow)
+  })
+
+  socket.on("removerSeta", ({ campaignId, arrowId }: { campaignId: string; arrowId: string }) => {
+    socket.to(campaignId).emit("setaRemovida", { arrowId })
+  })
+
   socket.on("disconnect", () => {
     console.log("Cliente desconectado:", socket.id)
   })
