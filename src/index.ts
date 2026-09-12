@@ -58,6 +58,10 @@ io.on("connection", (socket) => {
   socket.to(campaignId).emit("tokenRemovidoConfirmado", { tokenId })
   })
 
+  socket.on("tokenSaiuDeCena", ({ campaignId, tokenId }: { campaignId: string; tokenId: string }) => {
+  socket.to(campaignId).emit("tokenSaiuDeCenaConfirmado", { tokenId })
+})
+
 })
 
 
